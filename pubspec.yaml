@@ -1,0 +1,56 @@
+name: atelyam
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: ">=3.3.3 <4.0.0"
+
+dependencies:
+  cupertino_icons: ^1.0.6
+  get: 4.6.6
+  flutter_lints:
+  flutter_iconly:
+  lottie: ^3.1.0
+  get_storage:
+  image_picker:
+  cached_network_image: ^3.3.1
+  firebase_core_platform_interface: 4.5.1
+  firebase_core: any
+  firebase_messaging: ^11.2.6
+  awesome_notifications:
+  permission_handler: ^11.0.1
+  flutter_staggered_grid_view: ^0.4.0
+  carousel_slider:
+  flutter_screenutil:
+  flutter_map:
+  geolocator: 
+  # geocoding:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  assets:
+    - assets/fonts/
+    - assets/icons/
+    - assets/lottie/
+    - assets/image/
+
+  fonts:
+    - family: GilroyBold
+      fonts:
+        - asset: assets/fonts/Gilroy-Bold.ttf
+    - family: GilroySemiBold
+      fonts:
+        - asset: assets/fonts/Gilroy-SemiBold.ttf
+    - family: GilroyMedium
+      fonts:
+        - asset: assets/fonts/Gilroy-Medium.ttf
+    - family: GilroyRegular
+      fonts:
+        - asset: assets/fonts/Gilroy-Regular.ttf
+  uses-material-design: true
+  generate: true

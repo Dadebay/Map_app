@@ -1,15 +1,35 @@
-import 'package:atelyam/constants/buttons/agree_button_view.dart';
+import 'package:atelyam/app/data/services/auth_service.dart';
 import 'package:atelyam/constants/customWidget/custom_app_bar.dart';
 import 'package:atelyam/constants/customWidget/custom_text_field.dart';
-import 'package:atelyam/constants/customWidget/widgets.dart';
 import 'package:flutter/material.dart';
 
-class ProfilEdit extends StatelessWidget {
-  ProfilEdit({super.key});
+class ProfilEdit extends StatefulWidget {
+  const ProfilEdit({super.key});
+
+  @override
+  State<ProfilEdit> createState() => _ProfilEditState();
+}
+
+class _ProfilEditState extends State<ProfilEdit> {
   TextEditingController userNameController = TextEditingController();
+
   FocusNode usernameFocusNode = FocusNode();
+
   TextEditingController passwordController = TextEditingController();
+
   FocusNode passwordFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  dynamic changeDATA() async {
+    await Auth().getData().then((a) {
+      print(a);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,11 +50,6 @@ class ProfilEdit extends StatelessWidget {
             focusNode: passwordFocusNode,
             requestfocusNode: usernameFocusNode,
           ),
-          AgreeButton(
-              onTap: () {
-                showSnackBar("Success", "You succesfully changed User data", Colors.green);
-              },
-              text: "agree")
         ],
       ),
     );

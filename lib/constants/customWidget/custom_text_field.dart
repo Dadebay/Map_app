@@ -1,6 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 
 import 'constants.dart';
@@ -80,52 +81,59 @@ class CustomSeachField extends StatelessWidget {
   CustomSeachField({super.key});
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      style: const TextStyle(color: Colors.black, fontFamily: gilroyMedium),
-      cursorColor: Colors.black,
-      controller: textEditingController,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return 'errorEmpty'.tr;
-        }
-        return null;
-      },
-      onEditingComplete: () {},
-      keyboardType: TextInputType.text,
-      maxLines: 1,
-      decoration: InputDecoration(
-        errorMaxLines: 2,
-        errorStyle: const TextStyle(fontFamily: gilroyMedium),
-        hintMaxLines: 5,
-        helperMaxLines: 5,
-        hintText: 'search'.tr,
-        hintStyle: TextStyle(color: Colors.grey.shade300, fontFamily: gilroyMedium),
-        contentPadding: const EdgeInsets.only(left: 25, top: 10, bottom: 10, right: 10),
-        border: const OutlineInputBorder(
-          borderRadius: borderRadius15,
-          borderSide: BorderSide(color: Colors.grey, width: 2),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: borderRadius15,
-          borderSide: BorderSide(color: Colors.grey.shade200, width: 2),
-        ),
-        focusedBorder: const OutlineInputBorder(
-          borderRadius: borderRadius15,
-          borderSide: BorderSide(
-            color: kPrimaryColor,
-            width: 2,
+    return Padding(
+      padding: const EdgeInsets.only(top: kToolbarHeight + 10, left: 10, bottom: 10, right: 10),
+      child: TextFormField(
+        style: const TextStyle(color: Colors.black, fontFamily: gilroyMedium),
+        cursorColor: Colors.black,
+        controller: textEditingController,
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'errorEmpty'.tr;
+          }
+          return null;
+        },
+        onEditingComplete: () {},
+        keyboardType: TextInputType.text,
+        maxLines: 1,
+        decoration: InputDecoration(
+          errorMaxLines: 2,
+          errorStyle: const TextStyle(fontFamily: gilroyMedium),
+          hintMaxLines: 5,
+          helperMaxLines: 5,
+          suffixIcon: const Icon(
+            IconlyLight.search,
+            color: Colors.black,
           ),
-        ),
-        focusedErrorBorder: const OutlineInputBorder(
-          borderRadius: borderRadius15,
-          borderSide: BorderSide(
-            color: kPrimaryColor,
-            width: 2,
+          hintText: 'search'.tr,
+          hintStyle: TextStyle(color: Colors.grey.shade300, fontFamily: gilroyMedium),
+          contentPadding: const EdgeInsets.only(left: 25, top: 10, bottom: 10, right: 10),
+          border: const OutlineInputBorder(
+            borderRadius: borderRadius15,
+            borderSide: BorderSide(color: Colors.grey, width: 2),
           ),
-        ),
-        errorBorder: const OutlineInputBorder(
-          borderRadius: borderRadius15,
-          borderSide: BorderSide(color: Colors.red, width: 2),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: borderRadius15,
+            borderSide: BorderSide(color: Colors.grey.shade200, width: 2),
+          ),
+          focusedBorder: const OutlineInputBorder(
+            borderRadius: borderRadius15,
+            borderSide: BorderSide(
+              color: kPrimaryColor,
+              width: 2,
+            ),
+          ),
+          focusedErrorBorder: const OutlineInputBorder(
+            borderRadius: borderRadius15,
+            borderSide: BorderSide(
+              color: kPrimaryColor,
+              width: 2,
+            ),
+          ),
+          errorBorder: const OutlineInputBorder(
+            borderRadius: borderRadius15,
+            borderSide: BorderSide(color: Colors.red, width: 2),
+          ),
         ),
       ),
     );

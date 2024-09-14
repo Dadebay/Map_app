@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "681512274081",
+    "project_id": "mapapp-40276",
+    "storage_bucket": "mapapp-40276.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681512274081:android:5c2ef47d6a23d4dd2548e0",
+        "android_client_info": {
+          "package_name": "com.gurbanow.mapApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTpb-76Tv8iB8_bQUw6rMbxUonkizUEls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

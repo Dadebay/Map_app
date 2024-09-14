@@ -1,5 +1,6 @@
 // // ignore_for_file: file_names, must_be_immutable, always_use_package_imports, avoid_void_async, non_constant_identifier_names
 
+import 'package:atelyam/app/data/services/map_service.dart';
 import 'package:atelyam/app/modules/home/views/home_view.dart';
 import 'package:atelyam/app/modules/profil/views/profil_view.dart';
 import 'package:atelyam/app/modules/search/views/search_view.dart';
@@ -27,12 +28,14 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(
-        backArrow: false,
-        actionIcon: true,
-        centerTitle: true,
-        name: names[selectedIndex],
-      ),
+      appBar: selectedIndex != 2
+          ? const PreferredSize(preferredSize: Size.fromHeight(0), child: SizedBox.shrink())
+          : CustomAppBar(
+              backArrow: false,
+              actionIcon: true,
+              centerTitle: true,
+              name: names[selectedIndex],
+            ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         iconSize: 22,
@@ -44,7 +47,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
         selectedLabelStyle: const TextStyle(fontFamily: gilroySemiBold, fontSize: 13),
         unselectedLabelStyle: const TextStyle(fontFamily: gilroyMedium, fontSize: 12),
         currentIndex: selectedIndex,
-        onTap: (index) async => setState(() => selectedIndex = index),
+        onTap: (index) {
+          setState(() => selectedIndex = index);
+          MapService().getUsers();
+        },
         items: [
           BottomNavigationBarItem(
             icon: const Icon(IconlyLight.location),

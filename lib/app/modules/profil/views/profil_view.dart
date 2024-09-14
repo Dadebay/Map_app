@@ -1,4 +1,3 @@
-import 'package:atelyam/app/modules/profil/views/device_list_view.dart';
 import 'package:atelyam/app/modules/profil/views/profil_edit_view.dart';
 import 'package:atelyam/app/modules/profil/views/sos_history_view.dart';
 import 'package:atelyam/constants/buttons/change_lang_button.dart';
@@ -42,20 +41,6 @@ class ProfilView extends GetView<ProfilController> {
                 Get.to(() => const SosHistoryView());
               },
               icon: IconlyLight.document,
-            ),
-            ProfilButton(
-              name: 'deviceList',
-              lang: false,
-              onTap: () {
-                Get.to(() => const DeviceListView());
-              },
-              icon: IconlyLight.discovery,
-            ),
-            ProfilButton(
-              name: 'login',
-              lang: false,
-              onTap: () {},
-              icon: IconlyLight.login,
             ),
           ],
         ));

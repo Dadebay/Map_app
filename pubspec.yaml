@@ -7,24 +7,18 @@ environment:
 
 dependencies:
   cupertino_icons: ^1.0.6
-  get: 4.6.6
-  flutter_lints:
+  get: 
   flutter_iconly:
-  lottie: ^3.1.0
   get_storage:
-  image_picker:
-  cached_network_image: ^3.3.1
   firebase_core_platform_interface: 4.5.1
   firebase_core: any
   firebase_messaging: ^11.2.6
-  awesome_notifications:
   permission_handler: ^11.0.1
-  flutter_staggered_grid_view: ^0.4.0
-  carousel_slider:
   flutter_screenutil:
   flutter_map:
   geolocator: 
-  # geocoding:
+  lottie:
+  change_app_package_name: ^1.3.0
   flutter:
     sdk: flutter
 

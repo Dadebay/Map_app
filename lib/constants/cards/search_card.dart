@@ -1,63 +1,15 @@
 import 'dart:math';
 
+import 'package:atelyam/app/data/models/map_model.dart';
 import 'package:atelyam/constants/customWidget/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
 import 'package:get/get.dart';
 
 class SearchCard extends StatelessWidget {
-  SearchCard({super.key, required this.index});
-  final int index;
-  List names = [
-    'Kerimow Aman ',
-    'Abayewa Jemal',
-    'Çaryýewa Aýnur',
-    'Mekanow Aman',
-    'Saparowa Güljemal',
-    'Nazarowa Aýlar',
-    'Radajabow Hekim',
-    'Hojaglyýew Didar',
-  ];
-  List colors = [
-    Colors.red,
-    Colors.red,
-    Colors.green,
-    Colors.green,
-    Colors.green,
-    Colors.green,
-    Colors.green,
-    Colors.green,
-  ];
-  List mphList = [
-    '300',
-    '24',
-    '560',
-    '380',
-    '32',
-    '21',
-    '29',
-    '152',
-  ];
-  List battery = [
-    '80',
-    '95',
-    '75',
-    '98',
-    '10',
-    '76',
-    '89',
-    '99',
-  ];
-  List numBerList = [
-    '+966-592-241-111',
-    '+966-592-241-748',
-    '+966-592-241-698',
-    '+966-592-241-289',
-    '+966-592-241-147',
-    '+966-592-241-698',
-    '+966-592-241-698',
-    '+966-592-241-547',
-  ];
+  final MapModel model;
+
+  const SearchCard({super.key, required this.model});
   @override
   Widget build(BuildContext context) {
     Random random = Random();
@@ -73,7 +25,7 @@ class SearchCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
-            decoration: BoxDecoration(color: colors[index], borderRadius: const BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15))),
+            decoration: const BoxDecoration(color: Colors.green, borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15))),
             height: 110,
             width: 15,
           ),
@@ -90,11 +42,11 @@ class SearchCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        names[index],
+                        model.gpsName ?? 'Unknown',
                         style: const TextStyle(color: Colors.black, fontSize: 20, fontFamily: gilroySemiBold),
                       ),
                       Text(
-                        "${mphList[index]} m",
+                        model.howMuchKM,
                         style: const TextStyle(color: Colors.black, fontSize: 16, fontFamily: gilroySemiBold),
                       ),
                     ],
@@ -107,15 +59,15 @@ class SearchCard extends StatelessWidget {
                       children: [
                         const Icon(
                           Icons.wifi,
-                          color: Colors.black,
+                          color: Colors.grey,
                           size: 18,
                         ),
                         const SizedBox(
                           width: 10,
                         ),
                         Text(
-                          "Soňky mag: $min min $sec s",
-                          style: const TextStyle(color: Colors.black, fontSize: 16, fontFamily: gilroyRegular),
+                          "Soňky mag: ${model.itvtime} ",
+                          style: const TextStyle(color: Colors.grey, fontSize: 16, fontFamily: gilroyMedium),
                         ),
                       ],
                     ),
@@ -128,22 +80,22 @@ class SearchCard extends StatelessWidget {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             const Icon(
-                              IconlyLight.call,
-                              color: Colors.black,
+                              IconlyBold.call,
+                              color: Colors.grey,
                               size: 18,
                             ),
                             const SizedBox(
                               width: 10,
                             ),
                             Text(
-                              numBerList[index],
-                              style: const TextStyle(color: Colors.black, fontSize: 16, fontFamily: gilroyRegular),
+                              model.tel ?? 'Unknown',
+                              style: const TextStyle(color: Colors.grey, fontSize: 16, fontFamily: gilroyMedium),
                             ),
                           ],
                         ),
                       ),
                       Text(
-                        "${battery[index]} % ",
+                        "${model.vol} % ",
                         style: const TextStyle(color: Colors.black, fontSize: 16, fontFamily: gilroySemiBold),
                       ),
                     ],

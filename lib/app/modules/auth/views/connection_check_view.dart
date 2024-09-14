@@ -3,6 +3,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:atelyam/app/data/services/auth_service.dart';
+import 'package:atelyam/app/modules/auth/views/auth_view.dart';
 import 'package:atelyam/app/modules/home/views/bottom_nav_bar.dart';
 import 'package:atelyam/constants/customWidget/constants.dart';
 import 'package:flutter/material.dart';
@@ -30,11 +32,14 @@ class _ConnectionCheckViewState extends State {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result.first.rawAddress.isNotEmpty) {
+        String? sortID = '';
+        sortID = await Auth().getToken();
+        print(sortID);
         await Future.delayed(const Duration(seconds: 4), () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (BuildContext context) {
-                return const BottomNavBar();
+                return sortID == '' || sortID == null ? AuthView() : const BottomNavBar();
               },
             ),
           );

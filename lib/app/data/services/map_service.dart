@@ -12,7 +12,6 @@ class MapService {
   Future<List<MapModel>> getUsers() async {
     final List<MapModel> usersList = [];
     final String? sortID = await Auth().getToken();
-    print(sortID);
     final response = await http.get(
       Uri.parse(
         'http://www.gps08.net/android/userapi.ashx?method=CarList&sortID=$sortID&pageindex=1&pagesize=1&mapType=BAIDU',
@@ -21,6 +20,7 @@ class MapService {
         HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
       },
     );
+    print(response.body);
     if (response.statusCode == 200) {
       final responseJson = jsonDecode(response.body)['list']['car'] as List;
       homeController.userList.clear();

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:atelyam/app/data/services/auth_service.dart';
 import 'package:atelyam/constants/customWidget/custom_app_bar.dart';
 import 'package:atelyam/constants/customWidget/custom_text_field.dart';
@@ -12,8 +14,10 @@ class ProfilEdit extends StatefulWidget {
 
 class _ProfilEditState extends State<ProfilEdit> {
   TextEditingController userNameController = TextEditingController();
+  TextEditingController sortIDController = TextEditingController();
 
   FocusNode usernameFocusNode = FocusNode();
+  FocusNode sortIDFocusNode = FocusNode();
 
   TextEditingController passwordController = TextEditingController();
 
@@ -22,11 +26,15 @@ class _ProfilEditState extends State<ProfilEdit> {
   @override
   void initState() {
     super.initState();
+    getData();
   }
 
-  dynamic changeDATA() async {
+  dynamic getData() async {
     await Auth().getData().then((a) {
-      print(a);
+      final responseJson = json.decode(a.toString());
+      userNameController.text = responseJson['username'];
+      passwordController.text = responseJson['headImg'];
+      sortIDController.text = responseJson['id'];
     });
   }
 
@@ -39,16 +47,21 @@ class _ProfilEditState extends State<ProfilEdit> {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         children: [
           CustomTextField(
-            hintText: 'userName',
-            controller: userNameController,
-            focusNode: usernameFocusNode,
-            requestfocusNode: passwordFocusNode,
-          ),
-          CustomTextField(
-            hintText: 'userpassword',
-            controller: passwordController,
-            focusNode: passwordFocusNode,
+            hintText: 'ID',
+            disabled: false,
+            controller: sortIDController,
+            focusNode: sortIDFocusNode,
             requestfocusNode: usernameFocusNode,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: CustomTextField(
+              hintText: 'userName',
+              disabled: false,
+              controller: userNameController,
+              focusNode: usernameFocusNode,
+              requestfocusNode: passwordFocusNode,
+            ),
           ),
         ],
       ),

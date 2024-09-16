@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class MapModel {
   final String id;
   final String gpsName;
@@ -31,6 +33,7 @@ class MapModel {
   final String spe;
   final String dir;
   String howMuchKM;
+  Color color;
   MapModel({
     required this.id,
     required this.weidu,
@@ -64,6 +67,7 @@ class MapModel {
     required this.deviceType,
     required this.jindu,
     required this.howMuchKM,
+    required this.color,
   });
 
   factory MapModel.fromJson(Map<dynamic, dynamic> json) {
@@ -100,6 +104,7 @@ class MapModel {
       spe: json['spe'] ?? '',
       dir: json['dir'] ?? '',
       howMuchKM: '0.0',
+      color: Colors.green,
     );
   }
 }

@@ -42,7 +42,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSize {
                   size: 22.sp,
                 ),
                 onPressed: () {
-                  print("asdas");
                   Navigator.of(context).pop();
                 },
               ),

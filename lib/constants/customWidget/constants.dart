@@ -25,7 +25,7 @@ const String tmIcon = 'assets/image/tm.png';
 const String ruIcon = 'assets/image/ru.png';
 const String engIcon = 'assets/image/uk.png';
 ///////////////////
-const String logo = 'assets/icons/logo.png';
+const String logo = 'assets/icons/logo.jpeg';
 const String noData = 'assets/lottie/noData.json';
 const String appName = 'Hajj';
 const String loremImpsum =

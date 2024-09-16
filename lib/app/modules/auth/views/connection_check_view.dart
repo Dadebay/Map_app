@@ -34,7 +34,6 @@ class _ConnectionCheckViewState extends State {
       if (result.isNotEmpty && result.first.rawAddress.isNotEmpty) {
         String? sortID = '';
         sortID = await Auth().getToken();
-        print(sortID);
         await Future.delayed(const Duration(seconds: 4), () {
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(

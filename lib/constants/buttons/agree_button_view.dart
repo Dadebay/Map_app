@@ -24,7 +24,7 @@ class AgreeButton extends StatelessWidget {
       return AnimatedContainer(
         decoration: const BoxDecoration(borderRadius: borderRadius20, color: kPrimaryColor),
         margin: const EdgeInsets.only(top: 15),
-        padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: homeController.agreeButton.value ? 0 : 10.h),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: homeController.agreeButton.value ? 0 : 10.h),
         width: homeController.agreeButton.value ? 60.w : Get.size.width,
         duration: const Duration(milliseconds: 800),
         child: homeController.agreeButton.value

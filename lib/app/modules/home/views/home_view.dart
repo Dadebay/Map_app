@@ -22,13 +22,13 @@ class _HomeViewState extends State<HomeView> {
 
   String _currentMapType = 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
   Position? _currentPosition;
-  final MapController _mapController = MapController();
   MapModel? _selectedUser;
 
   @override
   void initState() {
     super.initState();
     _getCurrentPosition();
+    _future = MapService().getUsers();
   }
 
   Widget getData(AsyncSnapshot<List<MapModel>> snapshot) {
@@ -64,7 +64,8 @@ class _HomeViewState extends State<HomeView> {
         sign: "sign",
         deviceType: "deviceType",
         howMuchKM: '0.0',
-        jindu: _currentPosition!.longitude.toString()));
+        jindu: _currentPosition!.longitude.toString(),
+        color: Colors.green));
     return Obx(() {
       for (var element in homeController.userList) {
         double startLatitude = _currentPosition!.latitude;
@@ -80,81 +81,18 @@ class _HomeViewState extends State<HomeView> {
           element.howMuchKM = '${distance.toStringAsFixed(0)} m';
         }
       }
-      print(homeController.userList);
       return Stack(
         children: [
           map(),
           rightBottomIcons(),
-          if (homeController.showDetails.value && _selectedUser != null)
-            Positioned.fill(
-              left: 10,
-              right: 10,
-              child: Center(
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 10,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      textWidgetRow(text1: "${'userName'.tr} : ", text2: _selectedUser!.gpsName),
-                      textWidgetRow(text1: "${'phoneNumber'.tr} : ", text2: _selectedUser!.tel),
-                      textWidgetRow(text1: "${'lastSeen'.tr} : ", text2: _selectedUser!.itvtime),
-                      textWidgetRow(text1: "${'Distance'.tr} : ", text2: _selectedUser!.howMuchKM),
-                    ],
-                  ),
-                ),
-              ),
-            ),
         ],
       );
     });
   }
 
-  Widget textWidgetRow({required String text1, required String text2}) {
-    return Container(
-      width: Get.size.width / 1.2,
-      padding: const EdgeInsets.only(top: 4, bottom: 4),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Text(
-              text1,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: Colors.grey, fontSize: 18, fontFamily: gilroyMedium),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              text2,
-              maxLines: 2,
-              textAlign: TextAlign.left,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: Colors.black, fontSize: 18, fontFamily: gilroySemiBold),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget map() {
     return FlutterMap(
-      mapController: _mapController,
+      mapController: homeController.mapController,
       options: MapOptions(
         initialCenter: LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
         initialZoom: 13,
@@ -179,10 +117,18 @@ class _HomeViewState extends State<HomeView> {
                       onTap: () {
                         _selectedUser = homeController.userList[index];
                         homeController.showDetails.value = true;
+                        if (homeController.showDetails.value && _selectedUser != null) {
+                          showUserInfo(
+                            name: _selectedUser!.gpsName,
+                            tel: _selectedUser!.tel,
+                            itvTime: _selectedUser!.itvtime,
+                            howMuchKM: _selectedUser!.howMuchKM,
+                          );
+                        }
                       },
-                      child: const Icon(
-                        Icons.man_2_sharp,
-                        color: Colors.red,
+                      child: Icon(
+                        Icons.location_history_rounded,
+                        color: _selectedUser!.color,
                         size: 40,
                       ),
                     )
@@ -207,7 +153,7 @@ class _HomeViewState extends State<HomeView> {
             children: [
               GestureDetector(
                 onTap: () {
-                  _mapController.move(_mapController.camera.center, _mapController.camera.zoom + 1);
+                  homeController.mapController.move(homeController.mapController.camera.center, homeController.mapController.camera.zoom + 1);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -228,7 +174,7 @@ class _HomeViewState extends State<HomeView> {
               ),
               GestureDetector(
                 onTap: () {
-                  _mapController.move(_mapController.camera.center, _mapController.camera.zoom - 1);
+                  homeController.mapController.move(homeController.mapController.camera.center, homeController.mapController.camera.zoom - 1);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),
@@ -293,9 +239,7 @@ class _HomeViewState extends State<HomeView> {
         homeController.userCurrentLat.value = position.latitude;
         homeController.userCurrentLong.value = position.longitude;
       });
-    }).catchError((e) {
-      debugPrint(e);
-    });
+    }).catchError((e) {});
   }
 
   void _toggleMapType() {
@@ -308,12 +252,13 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
+  Future<List<MapModel>>? _future;
   @override
   Widget build(BuildContext context) {
     return _currentPosition == null
         ? spinKit()
         : FutureBuilder<List<MapModel>>(
-            future: MapService().getUsers(),
+            future: _future,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return spinKit();

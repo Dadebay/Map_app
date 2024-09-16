@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:atelyam/app/modules/home/controllers/home_controller.dart';
-import 'package:atelyam/constants/customWidget/widgets.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
@@ -12,27 +10,32 @@ class AuthService {
   final HomeController homeController = Get.put(HomeController());
 
   Future login({required String username, required String password}) async {
+    homeController.agreeButton.value = true;
     final response = await http.post(
-      Uri.parse('http://www.gps08.net/android/userapi.ashx?method=logUser&username=Dadebay&pwd=123456&type=1'),
+      Uri.parse('http://www.gps08.net/android/userapi.ashx?method=logUser&username=${username}&pwd=${password}&type=1'),
       headers: <String, String>{
         HttpHeaders.contentTypeHeader: 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, String>{
         'method': "logUser",
-        'username': username,
-        'pwd': password,
+        'username': username.toString(),
+        'pwd': password.toString(),
         'type': '1',
       }),
     );
-    if (response.statusCode == 200) {
-      final responseJson = json.decode(response.body);
-      print(responseJson['id']);
-      await Auth().setData(responseJson);
-      await Auth().setToken(responseJson['id']);
-      showSnackBar('Success', "You are logged in babe", Colors.green);
-      return response.statusCode;
+    if (response.body != "{}") {
+      if (response.statusCode == 200) {
+        final responseJson = json.decode(response.body);
+        responseJson['headImg'] = password;
+        await Auth().setData(json.encode(responseJson));
+        await Auth().setToken(responseJson['id']);
+        homeController.addOrUpdateUser(userId: responseJson['id'], userName: username, password: password);
+        return response.statusCode;
+      } else {
+        return response.statusCode;
+      }
     } else {
-      return response.statusCode;
+      return 404;
     }
   }
 }

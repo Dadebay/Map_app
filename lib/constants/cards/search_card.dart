@@ -37,7 +37,7 @@ class SearchCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              decoration: const BoxDecoration(color: Colors.green, borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15))),
+              decoration: BoxDecoration(color: Colors.green, borderRadius: BorderRadius.only(topLeft: Radius.circular(15), bottomLeft: Radius.circular(15))),
               height: 110,
               width: 15,
             ),

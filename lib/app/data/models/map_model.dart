@@ -31,6 +31,8 @@ class MapModel {
   final String spe;
   final String dir;
   String howMuchKM;
+  String howMuchMETR;
+  bool enableSOS;
   MapModel({
     required this.id,
     required this.weidu,
@@ -64,6 +66,8 @@ class MapModel {
     required this.deviceType,
     required this.jindu,
     required this.howMuchKM,
+    required this.enableSOS,
+    required this.howMuchMETR,
   });
 
   factory MapModel.fromJson(Map<dynamic, dynamic> json) {
@@ -100,6 +104,8 @@ class MapModel {
       spe: json['spe'] ?? '',
       dir: json['dir'] ?? '',
       howMuchKM: '0.0',
+      howMuchMETR: '0.0',
+      enableSOS: false,
     );
   }
 }

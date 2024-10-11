@@ -32,6 +32,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   void initState() {
     super.initState();
     changeToken();
+
     _handleLocationPermission();
   }
 

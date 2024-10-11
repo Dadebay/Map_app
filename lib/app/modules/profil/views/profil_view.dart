@@ -38,7 +38,7 @@ class ProfilView extends GetView<ProfilController> {
               name: 'sosHistory',
               lang: false,
               onTap: () {
-                Get.to(() => const SosHistoryView());
+                Get.to(() => SosHistoryView());
               },
               icon: IconlyLight.document,
             ),

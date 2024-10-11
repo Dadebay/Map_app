@@ -14,7 +14,7 @@ class SearchView extends StatelessWidget {
 
   onSearchTextChanged(String word) async {
     List<MapModel> productsList = homeController.userList;
-    List<MapModel>? fullData = [];
+    List<MapModel> fullData = [];
     List<String> words = word.toLowerCase().trim().split(' ');
     fullData = productsList.where((p) {
       bool result = false;
@@ -24,7 +24,7 @@ class SearchView extends StatelessWidget {
             result = true;
           }
         } else {
-          if (p.gpsName.toLowerCase().contains(word)) {
+          if (p.gpsName.toLowerCase().contains(word.toLowerCase())) {
             result = true;
           }
         }
@@ -45,6 +45,7 @@ class SearchView extends StatelessWidget {
           double endLatitude = double.parse(element.lat.toString()); // Replace with actual latitude
           double endLongitude = double.parse(element.long.toString()); // Replace with actual longitude
           double distance = Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
+          element.howMuchMETR = distance.toStringAsFixed(0);
           if (distance > 1000.0) {
             double km = (distance / 1000).floorToDouble();
             double meters = distance % 1000;
@@ -53,6 +54,8 @@ class SearchView extends StatelessWidget {
             element.howMuchKM = '${distance.toStringAsFixed(0)} m';
           }
         }
+        homeController.userList.sort((a, b) => double.parse(a.howMuchMETR.toString()).compareTo(double.parse(b.howMuchMETR.toString())));
+        homeController.userList.sort((a, b) => (b.enableSOS ? 1 : 0) - (a.enableSOS ? 1 : 0));
         return Column(
           children: [
             searchWidget(),

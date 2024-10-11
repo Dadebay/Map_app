@@ -65,6 +65,8 @@ class _HomeViewState extends State<HomeView> {
       deviceType: "deviceType",
       howMuchKM: '0.0',
       jindu: _currentPosition!.longitude.toString(),
+      howMuchMETR: '0.0',
+      enableSOS: false,
     ));
     return Obx(() {
       for (var element in homeController.userList) {
@@ -73,6 +75,7 @@ class _HomeViewState extends State<HomeView> {
         double endLatitude = double.parse(element.lat.toString()); // Replace with actual latitude
         double endLongitude = double.parse(element.long.toString()); // Replace with actual longitude
         double distance = Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
+        element.howMuchMETR = distance.toStringAsFixed(0);
         if (distance > 1000.0) {
           double km = (distance / 1000).floorToDouble();
           double meters = distance % 1000;
